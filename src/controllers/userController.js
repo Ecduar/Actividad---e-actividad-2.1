@@ -15,3 +15,26 @@ exports.newUserForm = (req, res) => {
   res.render('users/form', { user: null });
 };
 
+// Crear un nuevo usuario
+exports.createUser = async (req, res) => {
+    try {
+      await User.create(req.body);
+      res.redirect('/users');
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  };
+  
+  // Mostrar formulario para editar un usuario existente
+  exports.editUserForm = async (req, res) => {
+    try {
+      const user = await User.findByPk(req.params.id);
+      if (user) {
+        res.render('users/form', { user });
+      } else {
+        res.status(404).send('Usuario no encontrado');
+      }
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  };
