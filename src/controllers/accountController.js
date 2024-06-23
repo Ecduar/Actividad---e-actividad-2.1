@@ -4,7 +4,7 @@ const { SavingAccount, LoanAccount, User } = require("../models");
 exports.listSavingAccounts = async (req, res) => {
   try {
     const accounts = await SavingAccount.findAll({ include: User });
-    res.render("accounts/index", { accounts });
+    res.json({ accounts });
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -19,7 +19,7 @@ exports.newSavingAccountForm = (req, res) => {
 exports.createSavingAccount = async (req, res) => {
   try {
     await SavingAccount.create(req.body);
-    res.redirect("/accounts/savings");
+    res.json({ msg: "Cuenta registrada exitosamente" });
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -30,7 +30,7 @@ exports.editSavingAccountForm = async (req, res) => {
   try {
     const account = await SavingAccount.findByPk(req.params.id);
     if (account) {
-      res.render("accounts/savingForm", { account });
+      res.json({ msg: "Cuenta actualizada exitosamente" });
     } else {
       res.status(404).send("Cuenta no encontrada");
     }
@@ -45,7 +45,7 @@ exports.updateSavingAccount = async (req, res) => {
     const account = await SavingAccount.findByPk(req.params.id);
     if (account) {
       await account.update(req.body);
-      res.redirect("/accounts/savings");
+      res.json({ msg: "Cuenta actualizada exitosamente" });
     } else {
       res.status(404).send("Cuenta no encontrada");
     }
@@ -60,7 +60,7 @@ exports.deleteSavingAccount = async (req, res) => {
     const account = await SavingAccount.findByPk(req.params.id);
     if (account) {
       await account.destroy();
-      res.redirect("/accounts/savings");
+      res.json({ msg: "Cuenta eliminada exitosamente" });
     } else {
       res.status(404).send("Cuenta no encontrada");
     }
@@ -73,7 +73,7 @@ exports.deleteSavingAccount = async (req, res) => {
 exports.listLoanAccounts = async (req, res) => {
   try {
     const loanAccounts = await LoanAccount.findAll({ include: User });
-    res.render("accounts/loans", { loanAccounts });
+    res.json({ loanAccounts });
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -88,7 +88,7 @@ exports.newLoanAccountForm = (req, res) => {
 exports.createLoanAccount = async (req, res) => {
   try {
     await LoanAccount.create(req.body);
-    res.redirect("/accounts/loans");
+    res.json({ msg: "Registro exitoso" });
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -99,9 +99,9 @@ exports.editLoanAccountForm = async (req, res) => {
   try {
     const account = await LoanAccount.findByPk(req.params.id);
     if (account) {
-      res.render("accounts/loanForm", { account });
+      res.json({ msg: "Proceso exitoso" });
     } else {
-      res.status(404).send("Cuenta no encontrada");
+      res.status(404).json({ msg: "Cuenta no encontrada" });
     }
   } catch (error) {
     res.status(500).send(error.message);
@@ -114,7 +114,7 @@ exports.updateLoanAccount = async (req, res) => {
     const account = await LoanAccount.findByPk(req.params.id);
     if (account) {
       await account.update(req.body);
-      res.redirect("/accounts/loans");
+      res.json({ msg: "Proceso exitoso" });
     } else {
       res.status(404).send("Cuenta no encontrada");
     }
@@ -129,7 +129,7 @@ exports.deleteLoanAccount = async (req, res) => {
     const account = await LoanAccount.findByPk(req.params.id);
     if (account) {
       await account.destroy();
-      res.redirect("/accounts/loans");
+      res.json({ msg: "Proceso exitoso" });
     } else {
       res.status(404).send("Cuenta no encontrada");
     }
@@ -143,7 +143,7 @@ exports.nextLoanPaymentDate = async (req, res) => {
   try {
     const account = await LoanAccount.findByPk(req.params.id);
     if (account) {
-      res.render("accounts/nextPayment", { account });
+      res.json({ siguiente_pago: account });
     } else {
       res.status(404).send("Cuenta no encontrada");
     }
