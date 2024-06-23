@@ -21,12 +21,11 @@ app.set('views', path.join(__dirname, 'views'));
 
 // Importación de rutas
 const userRoutes = require('./routes/userRoutes');
-
-
+const accountRoutes = require("./routes/accountRoutes");
 
 // Uso de las rutas
-app.use('/users', userRoutes);
-
+app.use("/users", userRoutes);
+app.use("/accounts", accountRoutes);
 
 // Puerto de escucha
 const PORT = process.env.PORT || 3000;
