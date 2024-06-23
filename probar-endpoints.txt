@@ -68,7 +68,8 @@
 
 // Datos para editar una cooperativa - PUT
 {
-  "name": "Cooperativa Modificada"
+  "name": "Cooperativa Modificada",
+  "description": "alguna descripcion"
 }
 
 // Datos para eliminar una cooperativa - DELETE
