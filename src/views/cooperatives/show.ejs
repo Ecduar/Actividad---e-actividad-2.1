@@ -87,4 +87,24 @@
 <body>
     <div class="details-container">
         <h1>Detalles de la Cooperativa</h1>
-        <
+        <div class="details-group">
+            <label for="id">ID:</label>
+            <span class="info"><%= cooperative.id %></span>
+        </div>
+        <div class="details-group">
+            <label for="name">Nombre:</label>
+            <span class="info"><%= cooperative.name %></span>
+        </div>
+        <div class="details-group">
+            <label for="description">Descripción:</label>
+            <span class="info"><%= cooperative.description %></span>
+        </div>
+        <a href="/cooperatives/<%= cooperative.id %>/edit" class="btn">Editar</a>
+        <form action="/cooperatives/<%= cooperative.id %>?_method=DELETE" method="POST" style="display:inline;">
+            <button type="submit" class="btn">Eliminar</button>
+        </form>
+        <a href="/cooperatives" class="back-link">Volver a la Lista de Cooperativas</a>
+        </div>
+        </body>
+
+</html>
