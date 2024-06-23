@@ -19,7 +19,13 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 
+// Importación de rutas
+const userRoutes = require('./routes/userRoutes');
 
+
+
+// Uso de las rutas
+app.use('/users', userRoutes);
 
 
 // Puerto de escucha
