@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles de la Cuenta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+        }
+
+        h1 {
+            color: #007BFF;
+        }
+
+        .details-container {
+            max-width: 400px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .details-group {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        .info {
+            display: block;
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 0;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+        }
+
+        .btn:hover {
+            background-color: #0056b3
+        }
+
+        .btn:active {
+            background-color: #0056b3;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+
+        .back-link {
+            display: block;
+            margin-top: 20px;
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="details-container">
+        <h1>Detalles de la Cuenta</h1>
+        <div class="details-group">
+            <label for="id">ID:</label>
+            <span class="info"><%= account.id %></span>
+        </div>
+        <div class="details-group">
+            <label for="userId">Usuario ID:</label>
+            <span class="info"><%= account.userId %></span>
+        </div>
+        <div class="details-group">
+            <label for="type">Tipo de Cuenta:</label>
+            <span class="info"><%= account.type %></span>
+        </div>
+        <div class="details-group">
+            <label for="balance">Balance:</label>
+            <span class="info"><%= account.balance %></span>
+        </div>
+        <div class="details-group">
+            <label for="interestRate">Tasa de Interés:</label>
+            <span class="info"><%= account.interestRate %></span>
+        </div>
+        <div class="details-group">
+            <label for="nextPaymentDate">Próxima Fecha de Pago:</label>
+            <span class="info"><%= account.nextPaymentDate %></span>
+        </div>
+        <a href="/accounts/<%= account.id %>/edit" class="btn">Editar</a>
+        <form action="/accounts/<%= account.id %>?_method=DELETE" method="POST" style="display:inline;">
+            <button type="submit" class="btn">Eliminar</button>
+        </form>
+        <a href="/accounts" class="back-link">Volver a la Lista de Cuentas</a>
+    </div>
+</body>
+
+</html>
