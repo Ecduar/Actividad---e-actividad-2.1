@@ -1,0 +1,98 @@
+1 Usuarios (/users Endpoint)
+
+// Datos para crear un usuario - POST
+{
+  "name": "Juan Perez",
+  "email": "juan@example.com"
+}
+
+// Datos para editar un usuario - PUT
+{
+  "name": "Juan Pérez Modificado",
+  "email": "juan_modificado@example.com"
+}
+
+// Datos para eliminar un usuario - DELETE
+{
+  "id": 1
+}
+
+
+2 Cuentas de Ahorro (/saving-accounts Endpoint)
+
+// Datos para crear una cuenta de ahorro - POST
+{
+  "userId": 1,
+  "balance": 1000.00,
+  "interestRate": 0.5
+}
+
+// Datos para editar una cuenta de ahorro - PUT
+{
+  "balance": 1200.00,
+  "interestRate": 0.6
+}
+
+// // Datos para eliminar una cuenta de ahorro - DELETE
+{
+  "id": 1
+}
+
+
+3 Cuentas de Préstamo (/loan-accounts Endpoint)
+
+// Datos para crear una cuenta de préstamo - POST
+{
+  "userId": 2,
+  "amount": 5000.00,
+  "nextPaymentDate": "2024-07-01"
+}
+
+// Datos para editar una cuenta de préstamo - PUT
+{
+  "amount": 4500.00,
+  "nextPaymentDate": "2024-08-01"
+}
+
+// Datos para eliminar una cuenta de préstamo - DELETE
+{
+  "id": 1
+}
+
+4 Cooperativas (/cooperatives Endpoint)
+
+// Datos para crear una cooperativa - POST
+{
+  "name": "Cooperativa Ejemplo"
+}
+
+// Datos para editar una cooperativa - PUT
+{
+  "name": "Cooperativa Modificada"
+}
+
+// Datos para eliminar una cooperativa - DELETE
+{
+  "id": 1
+}
+
+5 Relación Usuario-Cooperativa (/user-cooperatives Endpoint)
+
+// Datos para relacionar un usuario con una cooperativa - POST
+{
+  "userId": 1,
+  "cooperativeId": 1,
+  "role": "Miembro"
+}
+
+
+// Datos para modificar la relación usuario-cooperativa - PUT
+{
+  "role": "Administrador"
+}
+
+// Datos para eliminar la relación usuario-cooperativa - DELETE
+{
+  "userId": 1,
+  "cooperativeId": 1
+}

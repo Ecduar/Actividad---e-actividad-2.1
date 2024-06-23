@@ -26,6 +26,5 @@ Cooperativas
     /api/cooperatives/:id (GET, DELETE)
 
 3. Participantes del Backend
-Nombre Apellido - cedula
-Nombre Apellido - cedula 
-
+Ecduar Enrique Estrada Nieto - C.I: 29718294
+Gustavo Andrés Méndez chacín - C.I: 30860474

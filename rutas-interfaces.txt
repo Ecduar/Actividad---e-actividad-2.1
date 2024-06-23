@@ -1,0 +1,32 @@
+---- Estos endpoints servirán para renderizar las diferentes paginas/interfaces -----
+
+Usuarios:
+
+/users: Listado de usuarios.
+/users/create: Formulario para crear un usuario.
+/users/:id: Detalles de un usuario específico.
+/users/:id/edit: Formulario para editar un usuario.
+Cuentas de Ahorro:
+
+/saving-accounts: Listado de cuentas de ahorro.
+/saving-accounts/create: Formulario para crear una cuenta de ahorro.
+/saving-accounts/:id: Detalles de una cuenta de ahorro específica.
+/saving-accounts/:id/edit: Formulario para editar una cuenta de ahorro.
+Cuentas de Préstamo:
+
+/loan-accounts: Listado de cuentas de préstamo.
+/loan-accounts/create: Formulario para crear una cuenta de préstamo.
+/loan-accounts/:id: Detalles de una cuenta de préstamo específica.
+/loan-accounts/:id/edit: Formulario para editar una cuenta de préstamo.
+Cooperativas:
+
+/cooperatives: Listado de cooperativas.
+/cooperatives/create: Formulario para crear una cooperativa.
+/cooperatives/:id: Detalles de una cooperativa específica.
+/cooperatives/:id/edit: Formulario para editar una cooperativa.
+Relación Usuario-Cooperativa:
+
+/user-cooperatives: Listado de relaciones usuario-cooperativa.
+/user-cooperatives/create: Formulario para relacionar un usuario con una cooperativa.
+/user-cooperatives/:userId/:cooperativeId: Detalles de la relación usuario-cooperativa específica.
+/user-cooperatives/:userId/:cooperativeId/edit: Formulario para editar la relación usuario-cooperativa.
