@@ -2,20 +2,24 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 const User = require("./user");
 
-const LoanAccount = sequelize.define("LoanAccount", {
-  balance: {
-    type: DataTypes.FLOAT,
-    allowNull: false
+const LoanAccount = sequelize.define(
+  "LoanAccount",
+  {
+    balance: {
+      type: DataTypes.FLOAT,
+      allowNull: false
+    },
+    interestRate: {
+      type: DataTypes.FLOAT,
+      allowNull: false
+    },
+    nextPaymentDate: {
+      type: DataTypes.DATE,
+      allowNull: false
+    }
   },
-  interestRate: {
-    type: DataTypes.FLOAT,
-    allowNull: false
-  },
-  nextPaymentDate: {
-    type: DataTypes.DATE,
-    allowNull: false
-  }
-});
+  { tableName: "loanaccount" }
+);
 
 LoanAccount.belongsTo(User);
 User.hasMany(LoanAccount);

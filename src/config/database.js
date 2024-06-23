@@ -13,4 +13,18 @@ const sequelize = new Sequelize(
   }
 );
 
+async function startApp() {
+  try {
+    // Sincronizar la base de datos al iniciar la aplicación
+    await sequelize.sync();
+    console.log(
+      "Conexión a la base de datos establecida y sincronización exitosa."
+    );
+  } catch (error) {
+    console.error("Error al conectar y sincronizar la base de datos:", error);
+  }
+}
+
+startApp();
+
 module.exports = sequelize;
