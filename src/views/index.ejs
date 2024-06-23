@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema Bancario Social</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 200px;
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .sidebar h2 {
+            margin-top: 0;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar li {
+            margin-bottom: 10px;
+        }
+
+        .sidebar a {
+            color: #fff;
+            text-decoration: none;
+            display: block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar a:hover {
+            background-color: #0056b3;
+        }
+
+        .content {
+            padding: 20px;
+            flex: 1;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>Proyecto de Sistema Bancario Social</h2>
+        <ul>
+            <li><a href="/">Inicio</a></li>
+            <!-- Rutas para  usuarios -->
+            <li><a href="/users">Lista de Usuarios</a></li>
+            <li><a href="/users/new">Nuevo Usuario</a></li>
+            <!-- Rutas para cooperativas -->
+            <li><a href="/cooperatives">Cooperativas</a></li>
+            <li><a href="/cooperatives/new">Nueva Cooperativa</a></li>
+        </ul>
+    </div>
+    <div class="content">
+        <!-- Contenido principal de la página -->
+        <h1>Sistema Bancario Social</h1>
+    </div>
+</body>
+
+</html>

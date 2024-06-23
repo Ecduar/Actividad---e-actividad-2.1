@@ -3,8 +3,8 @@ const { SavingAccount, LoanAccount, User } = require("../models");
 // Listar todas las cuentas de ahorro
 exports.listSavingAccounts = async (req, res) => {
   try {
-    const savingAccounts = await SavingAccount.findAll({ include: User });
-    res.render("accounts/savings", { savingAccounts });
+    const accounts = await SavingAccount.findAll({ include: User });
+    res.render("accounts/index", { accounts });
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -12,7 +12,7 @@ exports.listSavingAccounts = async (req, res) => {
 
 // Mostrar formulario para crear una nueva cuenta de ahorro
 exports.newSavingAccountForm = (req, res) => {
-  res.render("accounts/savingForm", { account: null });
+  res.render("accounts/form", { account: null });
 };
 
 // Crear una nueva cuenta de ahorro

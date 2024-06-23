@@ -13,17 +13,6 @@ exports.newUserForm = userController.newUserForm;
 exports.editUserForm = userController.editUserForm;
 exports.listUserAccounts = userController.listUserAccounts;
 
-// Rutas para cuentas de ahorro
-exports.listSavingAccounts = accountController.listSavingAccounts;
-exports.newSavingAccountForm = accountController.newSavingAccountForm;
-exports.editSavingAccountForm = accountController.editSavingAccountForm;
-
-// Rutas para cuentas de préstamos
-exports.listLoanAccounts = accountController.listLoanAccounts;
-exports.newLoanAccountForm = accountController.newLoanAccountForm;
-exports.editLoanAccountForm = accountController.editLoanAccountForm;
-exports.nextLoanPaymentDate = accountController.nextLoanPaymentDate;
-
 // Rutas para cooperativas
 exports.listCooperatives = cooperativesController.listCooperatives;
 exports.newCooperativeForm = cooperativesController.newCooperativeForm;
