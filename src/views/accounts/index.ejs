@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Cuentas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f9;
+        }
+
+        h1 {
+            color: #007BFF;
+        }
+
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 80%;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #ddd;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 0;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+        }
+
+        .btn:hover {
+            background-color: #0056b3
+        }
+
+        .btn:active {
+            background-color: #0056b3;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Lista de Cuentas</h1>
+        <a href="/accounts/new" class="btn">Crear Nueva Cuenta</a>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Usuario ID</th>
+                    <th>Tipo</th>
+                    <th>Balance</th>
+                    <th>Tasa de Interés</th>
+                    <th>Próxima Fecha de Pago</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% accounts.forEach(account => { %>
+                <tr>
+                    <td><%= account.id %></td>
+                    <td><%= account.userId %></td>
+                    <td><%= account.type %></td>
+                    <td><%= account.balance %></td>
+                    <td><%= account.interestRate %></td>
+                    <td><%= account.nextPaymentDate %></td>
+                    <td>
+                        <a href="/accounts/<%= account.id %>/edit" class="btn">Editar</a>
+                        <form action="/accounts/<%= account.id %>?_method=DELETE" method="POST" style="display:inline;">
+                            <button type="submit" class="btn">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</body>
+
+</html>
