@@ -13,29 +13,4 @@ const sequelize = new Sequelize(
   }
 );
 
-// Cargar modelos
-const User = require("./models/User")(sequelize, Sequelize);
-const UserCooperative = require("./models/UserCooperative")(
-  sequelize,
-  Sequelize
-);
-const SavingAccount = require("./models/SavingAccount")(sequelize, Sequelize);
-const LoanAccount = require("./models/LoanAccount")(sequelize, Sequelize);
-const Cooperative = require("./models/Cooperative")(sequelize, Sequelize);
-
-// Función para sincronizar la base de datos con las migraciones
-async function syncDatabase() {
-  try {
-    // Ejecutar migraciones (crear tablas si no existen)
-    await sequelize.sync();
-    console.log("Base de datos sincronizada con éxito.");
-  } catch (error) {
-    console.error("Error al sincronizar la base de datos:", error);
-  }
-}
-
-// Ejecutar la sincronización al iniciar la aplicación
-syncDatabase();
-
 module.exports = sequelize;
-

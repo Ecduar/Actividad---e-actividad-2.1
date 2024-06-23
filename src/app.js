@@ -22,7 +22,7 @@ app.set('views', path.join(__dirname, 'views'));
 // Importación de rutas
 const userRoutes = require('./routes/userRoutes');
 const accountRoutes = require("./routes/accountRoutes");
-const cooperativeRoutes = require("./routes/cooperativeRoutes");
+const cooperativeRoutes = require("./routes/cooperativesRoutes");
 const uiRoutes = require("./routes/uiRoutes");
 
 // Uso de las rutas
