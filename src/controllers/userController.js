@@ -38,3 +38,33 @@ exports.createUser = async (req, res) => {
       res.status(500).send(error.message);
     }
   };
+
+  // Actualizar un usuario existente
+exports.updateUser = async (req, res) => {
+    try {
+      const user = await User.findByPk(req.params.id);
+      if (user) {
+        await user.update(req.body);
+        res.redirect('/users');
+      } else {
+        res.status(404).send('Usuario no encontrado');
+      }
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  };
+  
+  // Eliminar un usuario
+  exports.deleteUser = async (req, res) => {
+    try {
+      const user = await User.findByPk(req.params.id);
+      if (user) {
+        await user.destroy();
+        res.redirect('/users');
+      } else {
+        res.status(404).send('Usuario no encontrado');
+      }
+    } catch (error) {
+      res.status(500).send(error.message);
+    }
+  };
