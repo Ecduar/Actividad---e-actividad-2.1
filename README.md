@@ -11,7 +11,14 @@ Este proyecto es una API REST desarrollada en Node.js con Express y Sequelize pa
    npm run dev para inciar el proyecto
 
 
-2. Endpoints Disponibles
+2. Crear un archivo en la raiz .env y colocarle las siguientes variables:
+    DB_NAME=actividad2
+    DB_USER=root
+    DB_PASS=
+    DB_HOST=localhost
+    PORT=3000
+
+3. Endpoints Disponibles
 Usuarios
     /api/users (POST, GET, PUT, DELETE)
     /api/users/:id (GET, DELETE)
@@ -25,6 +32,6 @@ Cooperativas
     /api/cooperatives (POST, GET, PUT, DELETE)
     /api/cooperatives/:id (GET, DELETE)
 
-3. Participantes del Backend
+4. Participantes del Backend
 Ecduar Enrique Estrada Nieto - C.I: 29718294
 Gustavo Andrés Méndez chacín - C.I: 30860474
