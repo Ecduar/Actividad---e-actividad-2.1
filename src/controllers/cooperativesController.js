@@ -1,5 +1,15 @@
 const { Cooperative, User, UserCooperative } = require("../models");
 
+// Obtener todas las cooperativas
+exports.getAllCooperatives = async () => {
+  try {
+    const cooperatives = await Cooperative.findAll();
+    return cooperatives;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // Listar todas las cooperativas
 exports.listCooperatives = async (req, res) => {
   try {
@@ -11,14 +21,23 @@ exports.listCooperatives = async (req, res) => {
 };
 
 // Mostrar formulario para crear una nueva cooperativa
-exports.newCooperativeForm = (req, res) => {
-  res.render("cooperatives/form", { cooperative: null });
+exports.newCooperativeForm = async (req, res) => {
+  try {
+    const users = await User.findAll();
+    res.render("cooperatives/form", { cooperative: null, users });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 };
 
 // Crear una nueva cooperativa
 exports.createCooperative = async (req, res) => {
   try {
-    await Cooperative.create(req.body);
+    const { name, description, userIds } = req.body;
+    const cooperative = await Cooperative.create({ name, description });
+    if (userIds) {
+      await cooperative.setUsers(userIds);
+    }
     res.redirect("/cooperatives");
   } catch (error) {
     res.status(500).send(error.message);
@@ -28,9 +47,10 @@ exports.createCooperative = async (req, res) => {
 // Mostrar formulario para editar una cooperativa existente
 exports.editCooperativeForm = async (req, res) => {
   try {
-    const cooperative = await Cooperative.findByPk(req.params.id);
+    const cooperative = await Cooperative.findByPk(req.params.id, { include: { model: User, as: 'Users' } });
+    const users = await User.findAll();
     if (cooperative) {
-      res.render("cooperatives/form", { cooperative });
+      res.render("cooperatives/form", { cooperative, users });
     } else {
       res.status(404).send("Cooperativa no encontrada");
     }
@@ -42,9 +62,13 @@ exports.editCooperativeForm = async (req, res) => {
 // Actualizar una cooperativa existente
 exports.updateCooperative = async (req, res) => {
   try {
+    const { name, description, userIds } = req.body;
     const cooperative = await Cooperative.findByPk(req.params.id);
     if (cooperative) {
-      await cooperative.update(req.body);
+      await cooperative.update({ name, description });
+      if (userIds) {
+        await cooperative.setUsers(userIds);
+      }
       res.redirect("/cooperatives");
     } else {
       res.status(404).send("Cooperativa no encontrada");
@@ -73,12 +97,26 @@ exports.deleteCooperative = async (req, res) => {
 exports.addUserToCooperative = async (req, res) => {
   try {
     const cooperative = await Cooperative.findByPk(req.params.cooperativeId);
-    const user = await User.findByPk(req.params.userId);
+    const user = await User.findByPk(req.body.userId);
     if (cooperative && user) {
-      await cooperative.addUser(user);
+      await cooperative.addUser(user, { through: { role: 'member' } }); // Proporciona un valor para el campo 'role'
       res.redirect(`/cooperatives/${req.params.cooperativeId}/edit`);
     } else {
       res.status(404).send("Cooperativa o Usuario no encontrado");
+    }
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+// Mostrar la página de gestión de usuarios para una cooperativa específica
+exports.manageCooperativeUsers = async (req, res) => {
+  try {
+    const cooperative = await Cooperative.findByPk(req.params.id, { include: { model: User, as: 'Users' } });
+    const users = await User.findAll();
+    if (cooperative) {
+      res.render("cooperatives/manage", { cooperative, users });
+    } else {
+      res.status(404).send("Cooperativa no encontrada");
     }
   } catch (error) {
     res.status(500).send(error.message);
@@ -91,7 +129,12 @@ exports.removeUserFromCooperative = async (req, res) => {
     const cooperative = await Cooperative.findByPk(req.params.cooperativeId);
     const user = await User.findByPk(req.params.userId);
     if (cooperative && user) {
-      await cooperative.removeUser(user);
+      await UserCooperative.destroy({
+        where: {
+          userId: user.id,
+          cooperativeId: cooperative.id
+        }
+      });
       res.redirect(`/cooperatives/${req.params.cooperativeId}/edit`);
     } else {
       res.status(404).send("Cooperativa o Usuario no encontrado");

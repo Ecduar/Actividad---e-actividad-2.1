@@ -1,25 +1,56 @@
 const { SavingAccount, LoanAccount, User } = require("../models");
 
-// Listar todas las cuentas de ahorro
-exports.listSavingAccounts = async (req, res) => {
+// Obtener todas las cuentas de ahorro
+exports.getAllSavingAccounts = async () => {
   try {
-    const accounts = await SavingAccount.findAll({ include: User });
-    res.json({ accounts });
+    const savingAccounts = await SavingAccount.findAll({ include: [User] });
+    return savingAccounts;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// Obtener todas las cuentas de préstamos
+exports.getAllLoanAccounts = async () => {
+  try {
+    const loanAccounts = await LoanAccount.findAll({ include: [User] });
+    return loanAccounts;
+  } catch (error) {
+    throw error;
+  }
+};
+
+// Listar todas las cuentas
+exports.listAllAccounts = async (req, res) => {
+  try {
+    const savingAccounts = await SavingAccount.findAll({ include: User });
+    const loanAccounts = await LoanAccount.findAll({ include: User });
+
+    // cuentas de ahorro y préstamos en una sola lista
+    const accounts = [...savingAccounts.map(account => ({ ...account.get(), type: 'savings' })), 
+                      ...loanAccounts.map(account => ({ ...account.get(), type: 'loans' }))];
+
+    res.render('accounts/list', { accounts });
   } catch (error) {
     res.status(500).send(error.message);
   }
 };
 
 // Mostrar formulario para crear una nueva cuenta de ahorro
-exports.newSavingAccountForm = (req, res) => {
-  res.render("accounts/form", { account: null });
+exports.newSavingAccountForm = async (req, res) => {
+  try {
+    const users = await User.findAll();
+    res.render("accounts/form", { account: null, users, type: 'savings' });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 };
 
 // Crear una nueva cuenta de ahorro
 exports.createSavingAccount = async (req, res) => {
   try {
     await SavingAccount.create(req.body);
-    res.json({ msg: "Cuenta registrada exitosamente" });
+    res.redirect('/accounts');
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -29,8 +60,9 @@ exports.createSavingAccount = async (req, res) => {
 exports.editSavingAccountForm = async (req, res) => {
   try {
     const account = await SavingAccount.findByPk(req.params.id);
+    const users = await User.findAll();
     if (account) {
-      res.json({ msg: "Cuenta actualizada exitosamente" });
+      res.render("accounts/form", { account, users, type: 'savings' });
     } else {
       res.status(404).send("Cuenta no encontrada");
     }
@@ -45,7 +77,7 @@ exports.updateSavingAccount = async (req, res) => {
     const account = await SavingAccount.findByPk(req.params.id);
     if (account) {
       await account.update(req.body);
-      res.json({ msg: "Cuenta actualizada exitosamente" });
+      res.redirect('/accounts');
     } else {
       res.status(404).send("Cuenta no encontrada");
     }
@@ -60,7 +92,7 @@ exports.deleteSavingAccount = async (req, res) => {
     const account = await SavingAccount.findByPk(req.params.id);
     if (account) {
       await account.destroy();
-      res.json({ msg: "Cuenta eliminada exitosamente" });
+      res.redirect('/accounts');
     } else {
       res.status(404).send("Cuenta no encontrada");
     }
@@ -72,23 +104,28 @@ exports.deleteSavingAccount = async (req, res) => {
 // Listar todas las cuentas de préstamos
 exports.listLoanAccounts = async (req, res) => {
   try {
-    const loanAccounts = await LoanAccount.findAll({ include: User });
-    res.json({ loanAccounts });
+    const accounts = await LoanAccount.findAll({ include: User });
+    res.render('accounts/list', { accounts, type: 'loans' });
   } catch (error) {
     res.status(500).send(error.message);
   }
 };
 
 // Mostrar formulario para crear una nueva cuenta de préstamo
-exports.newLoanAccountForm = (req, res) => {
-  res.render("accounts/loanForm", { account: null });
+exports.newLoanAccountForm = async (req, res) => {
+  try {
+    const users = await User.findAll();
+    res.render("accounts/form", { account: null, users, type: 'loans' });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
 };
 
 // Crear una nueva cuenta de préstamo
 exports.createLoanAccount = async (req, res) => {
   try {
     await LoanAccount.create(req.body);
-    res.json({ msg: "Registro exitoso" });
+    res.redirect('/accounts');
   } catch (error) {
     res.status(500).send(error.message);
   }
@@ -98,8 +135,9 @@ exports.createLoanAccount = async (req, res) => {
 exports.editLoanAccountForm = async (req, res) => {
   try {
     const account = await LoanAccount.findByPk(req.params.id);
+    const users = await User.findAll();
     if (account) {
-      res.json({ msg: "Proceso exitoso" });
+      res.render("accounts/form", { account, users, type: 'loans' });
     } else {
       res.status(404).json({ msg: "Cuenta no encontrada" });
     }
@@ -114,7 +152,7 @@ exports.updateLoanAccount = async (req, res) => {
     const account = await LoanAccount.findByPk(req.params.id);
     if (account) {
       await account.update(req.body);
-      res.json({ msg: "Proceso exitoso" });
+      res.redirect('/accounts');
     } else {
       res.status(404).send("Cuenta no encontrada");
     }
@@ -129,7 +167,7 @@ exports.deleteLoanAccount = async (req, res) => {
     const account = await LoanAccount.findByPk(req.params.id);
     if (account) {
       await account.destroy();
-      res.json({ msg: "Proceso exitoso" });
+      res.redirect('/accounts');
     } else {
       res.status(404).send("Cuenta no encontrada");
     }
@@ -143,7 +181,7 @@ exports.nextLoanPaymentDate = async (req, res) => {
   try {
     const account = await LoanAccount.findByPk(req.params.id);
     if (account) {
-      res.json({ siguiente_pago: account });
+      res.json({ siguiente_pago: account.nextPaymentDate });
     } else {
       res.status(404).send("Cuenta no encontrada");
     }
