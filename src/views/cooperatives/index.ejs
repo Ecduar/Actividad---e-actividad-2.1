@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,22 +7,58 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
             background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
 
         h1 {
             color: #007BFF;
         }
 
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            margin: 10px 0;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px #999;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        .btn:active {
+            background-color: #0056b3;
+            box-shadow: 0 3px #666;
+            transform: translateY(2px);
+        }
+
         table {
             margin: 0 auto;
             border-collapse: collapse;
-            width: 80%;
+            width: 100%;
         }
 
-        th,
-        td {
+        th, td {
             border: 1px solid #ddd;
             padding: 8px;
         }
@@ -41,47 +76,22 @@
             background-color: #ddd;
         }
 
-        .btn {
+        .back-link {
             display: inline-block;
-            padding: 10px 20px;
-            margin: 10px 0;
-            font-size: 16px;
-            cursor: pointer;
-            text-align: center;
+            margin-top: 20px;
+            color: #007BFF;
             text-decoration: none;
-            outline: none;
-            color: #fff;
-            background-color: #007BFF;
-            border: none;
-            border-radius: 15px;
-            box-shadow: 0 9px #999;
         }
 
-        .btn:hover {
-            background-color: #0056b3
-        }
-
-        .btn:active {
-            background-color: #0056b3;
-            box-shadow: 0 5px #666;
-            transform: translateY(4px);
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+        .back-link:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
-
 <body>
     <div class="container">
         <h1>Lista de Cooperativas</h1>
-        <a href="/cooperatives/new" class="btn">Crear Nueva Cooperativa</a>
+        <a href="/cooperatives/new" class="btn">Nueva Cooperativa</a>
         <table>
             <thead>
                 <tr>
@@ -99,8 +109,8 @@
                     <td><%= cooperative.description %></td>
                     <td>
                         <a href="/cooperatives/<%= cooperative.id %>/edit" class="btn">Editar</a>
-                        <form action="/cooperatives/<%= cooperative.id %>?_method=DELETE" method="POST"
-                            style="display:inline;">
+                        <a href="/cooperatives/<%= cooperative.id %>/manage" class="btn">Gestionar Usuarios</a>
+                        <form action="/cooperatives/<%= cooperative.id %>?_method=DELETE" method="POST" style="display:inline;">
                             <button type="submit" class="btn">Eliminar</button>
                         </form>
                     </td>
@@ -108,7 +118,7 @@
                 <% }) %>
             </tbody>
         </table>
+        <a href="/" class="back-link">Volver al Inicio</a>
     </div>
 </body>
-
 </html>

@@ -10,24 +10,33 @@
             font-family: Arial, sans-serif;
             text-align: center;
             background-color: #f4f4f9;
-        }
-
-        h1 {
-            color: #007BFF;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
         }
 
         .details-container {
             max-width: 400px;
+            width: 100%;
             margin: 50px auto;
             padding: 20px;
             background-color: #fff;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
+            text-align: left;
+        }
+
+        h1 {
+            color: #007BFF;
+            margin-bottom: 20px;
+            text-align: center;
         }
 
         .details-group {
             margin-bottom: 15px;
-            text-align: left;
         }
 
         label {
@@ -58,17 +67,17 @@
             background-color: #007BFF;
             border: none;
             border-radius: 15px;
-            box-shadow: 0 9px #999;
+            box-shadow: 0 5px #999;
         }
 
         .btn:hover {
-            background-color: #0056b3
+            background-color: #0056b3;
         }
 
         .btn:active {
             background-color: #0056b3;
-            box-shadow: 0 5px #666;
-            transform: translateY(4px);
+            box-shadow: 0 3px #666;
+            transform: translateY(2px);
         }
 
         .back-link {
@@ -76,6 +85,7 @@
             margin-top: 20px;
             color: #007BFF;
             text-decoration: none;
+            text-align: center;
         }
 
         .back-link:hover {
@@ -91,4 +101,28 @@
             <label for="id">ID:</label>
             <span class="info"><%= user.id %></span>
         </div>
-        <di
+        <div class="details-group">
+            <label for="name">Nombre:</label>
+            <span class="info"><%= user.name %></span>
+        </div>
+        <div class="details-group">
+            <label for="email">Email:</label>
+            <span class="info"><%= user.email %></span>
+        </div>
+        <div class="details-group">
+            <label for="role">Rol:</label>
+            <span class="info"><%= user.role %></span>
+        </div>
+        <div class="details-group">
+            <label for="createdAt">Fecha de Creación:</label>
+            <span class="info"><%= user.createdAt.toLocaleDateString() %></span>
+        </div>
+        <div class="details-group">
+            <label for="updatedAt">Última Actualización:</label>
+            <span class="info"><%= user.updatedAt.toLocaleDateString() %></span>
+        </div>
+        <a href="/users" class="btn back-link">Volver</a>
+    </div>
+</body>
+
+</html>

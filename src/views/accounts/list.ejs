@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,22 +9,40 @@
             font-family: Arial, sans-serif;
             text-align: center;
             background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         h1 {
             color: #007BFF;
+            margin-top: 20px;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
         }
 
         table {
-            margin: 0 auto;
+            margin: 20px auto;
             border-collapse: collapse;
-            width: 80%;
+            width: 100%;
+            table-layout: fixed;
         }
 
-        th,
-        td {
+        th, td {
             border: 1px solid #ddd;
-            padding: 8px;
+            padding: 12px;
+            text-align: center;
+            word-wrap: break-word;
         }
 
         th {
@@ -44,7 +61,7 @@
         .btn {
             display: inline-block;
             padding: 10px 20px;
-            margin: 10px 0;
+            margin: 10px 5px;
             font-size: 16px;
             cursor: pointer;
             text-align: center;
@@ -54,39 +71,40 @@
             background-color: #007BFF;
             border: none;
             border-radius: 15px;
-            box-shadow: 0 9px #999;
+            box-shadow: 0 5px #999;
+            transition: background-color 0.3s, transform 0.3s;
         }
 
         .btn:hover {
-            background-color: #0056b3
+            background-color: #0056b3;
         }
 
         .btn:active {
             background-color: #0056b3;
-            box-shadow: 0 5px #666;
-            transform: translateY(4px);
+            box-shadow: 0 3px #666;
+            transform: translateY(2px);
         }
 
-        .container {
-            max-width: 800px;
-            margin: 20px auto;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
+        .btn-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
         }
     </style>
 </head>
-
 <body>
+    <h1>Lista de Cuentas</h1>
     <div class="container">
-        <h1>Lista de Cuentas</h1>
-        <a href="/accounts/new" class="btn">Crear Nueva Cuenta</a>
+        <div class="btn-container">
+            <a href="/accounts/savings/new" class="btn">Crear Nueva Cuenta de Ahorro</a>
+            <a href="/accounts/loans/new" class="btn">Crear Nueva Cuenta de Préstamo</a>
+            <a href="/" class="btn">Volver al Inicio</a>
+        </div>
         <table>
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Usuario ID</th>
+                    <th>Usuario</th>
                     <th>Tipo</th>
                     <th>Balance</th>
                     <th>Tasa de Interés</th>
@@ -98,14 +116,14 @@
                 <% accounts.forEach(account => { %>
                 <tr>
                     <td><%= account.id %></td>
-                    <td><%= account.userId %></td>
-                    <td><%= account.type %></td>
+                    <td><%= account.User ? account.User.name : 'Usuario no encontrado' %></td>
+                    <td><%= account.type === 'savings' ? 'Ahorro' : 'Préstamo' %></td>
                     <td><%= account.balance %></td>
                     <td><%= account.interestRate %></td>
-                    <td><%= account.nextPaymentDate %></td>
+                    <td><%= account.nextPaymentDate ? new Date(account.nextPaymentDate).toISOString().split('T')[0] : 'N/A' %></td>
                     <td>
-                        <a href="/accounts/<%= account.id %>/edit" class="btn">Editar</a>
-                        <form action="/accounts/<%= account.id %>?_method=DELETE" method="POST" style="display:inline;">
+                        <a href="/accounts/<%= account.type %>/<%= account.id %>/edit" class="btn">Editar</a>
+                        <form action="/accounts/<%= account.type %>/<%= account.id %>?_method=DELETE" method="POST" style="display:inline;">
                             <button type="submit" class="btn">Eliminar</button>
                         </form>
                     </td>
@@ -115,5 +133,4 @@
         </table>
     </div>
 </body>
-
 </html>
