@@ -1,27 +1,32 @@
-const { DataTypes } = require("sequelize");
-const sequelize = require("../config/database");
-const User = require("./user");
+const { DataTypes } = require('sequelize');
+const sequelize = require('../config/database');
 
-const LoanAccount = sequelize.define(
-  "LoanAccount",
-  {
-    balance: {
-      type: DataTypes.FLOAT,
-      allowNull: false
-    },
-    interestRate: {
-      type: DataTypes.FLOAT,
-      allowNull: false
-    },
-    nextPaymentDate: {
-      type: DataTypes.DATE,
-      allowNull: false
-    }
+const LoanAccount = sequelize.define('LoanAccount', {
+  amount: {
+    type: DataTypes.DECIMAL(10, 2),
+    allowNull: false
   },
-  { tableName: "loanaccount" }
-);
-
-LoanAccount.belongsTo(User);
-User.hasMany(LoanAccount);
+  balance: {
+    type: DataTypes.DECIMAL(10, 2),
+    defaultValue: 0.00,
+    allowNull: false
+  },
+  interestRate: {
+    type: DataTypes.DECIMAL(5, 2),
+    defaultValue: 0.00,
+    allowNull: false
+  },
+  nextPaymentDate: {
+    type: DataTypes.DATE,
+    allowNull: false
+  },
+  userId: {
+    type: DataTypes.INTEGER,
+    allowNull: false
+  }
+}, {
+  tableName: 'loan_accounts',
+  timestamps: true
+});
 
 module.exports = LoanAccount;
