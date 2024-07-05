@@ -1,35 +1,18 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const cooperativesController = require("../controllers/cooperativesController");
+const cooperativeController = require('../controllers/cooperativesController');
+const { authenticateToken, authorizeRoles } = require('../middleware/auth');
 
-// Listar todas las cooperativas
-router.get("/", cooperativesController.listCooperatives);
+router.get('/', authenticateToken, authorizeRoles('admin', 'editor', 'viewer'), cooperativeController.listCooperatives);
+router.get('/new', authenticateToken, authorizeRoles('admin', 'editor'), cooperativeController.newCooperativeForm);
+router.post('/', authenticateToken, authorizeRoles('admin', 'editor'), cooperativeController.createCooperative);
+router.get('/:id/edit', authenticateToken, authorizeRoles('admin', 'editor'), cooperativeController.editCooperativeForm);
+router.put('/:id', authenticateToken, authorizeRoles('admin', 'editor'), cooperativeController.updateCooperative);
+router.delete('/:id', authenticateToken, authorizeRoles('admin'), cooperativeController.deleteCooperative);
 
-// Mostrar formulario para crear una nueva cooperativa
-router.get("/new", cooperativesController.newCooperativeForm);
-
-// Crear una nueva cooperativa
-router.post("/", cooperativesController.createCooperative);
-
-// Mostrar formulario para editar una cooperativa existente
-router.get("/:id/edit", cooperativesController.editCooperativeForm);
-
-// Actualizar una cooperativa existente
-router.put("/:id", cooperativesController.updateCooperative);
-
-// Eliminar una cooperativa
-router.delete("/:id", cooperativesController.deleteCooperative);
-
-// Agregar un usuario a una cooperativa
-router.post(
-  "/:cooperativeId/users/:userId",
-  cooperativesController.addUserToCooperative
-);
-
-// Eliminar un usuario de una cooperativa
-router.delete(
-  "/:cooperativeId/users/:userId",
-  cooperativesController.removeUserFromCooperative
-);
+// Nueva ruta para gestionar usuarios
+router.get('/:id/manage', authenticateToken, authorizeRoles('admin', 'editor'), cooperativeController.manageCooperativeUsers);
+router.post('/:cooperativeId/users', authenticateToken, authorizeRoles('admin', 'editor'), cooperativeController.addUserToCooperative);
+router.delete('/:cooperativeId/users/:userId', authenticateToken, authorizeRoles('admin', 'editor'), cooperativeController.removeUserFromCooperative);
 
 module.exports = router;
